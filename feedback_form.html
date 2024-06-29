@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .feedback-form {
+            background: #FAE3CF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .feedback-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #0A0F24;
+        }
+        .feedback-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .feedback-form input,
+        .feedback-form textarea,
+        .feedback-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #FA8603;
+            border-radius: 4px;
+        }
+        .feedback-form button {
+            background: #28a745;
+            color: #FAE3CF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .feedback-form button:hover {
+            background: #218838;
+        }
+        .error {
+            color:red;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const name = document.forms["feedbackForm"]["name"].value;
+            const email = document.forms["feedbackForm"]["email"].value;
+            const feedback = document.forms["feedbackForm"]["feedback"].value;
+            const rating = document.forms["feedbackForm"]["rating"].value;
+
+            if (name === "") {
+                document.getElementById('nameError').innerText = "Name is required.";
+                isValid = false;
+            } else {
+                document.getElementById('nameError').innerText = "";
+            }
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (email === "" || !emailPattern.test(email)) {
+                document.getElementById('emailError').innerText = "Valid email is required.";
+                isValid = false;
+            } else {
+                document.getElementById('emailError').innerText = "";
+            }
+
+            if (feedback === "") {
+                document.getElementById('feedbackError').innerText = "Feedback is required.";
+                isValid = false;
+            } else {
+                document.getElementById('feedbackError').innerText = "";
+            }
+
+            if (rating === "") {
+                document.getElementById('ratingError').innerText = "Rating is required.";
+                isValid = false;
+            } else {
+                document.getElementById('ratingError').innerText = "";
+            }
+
+            return isValid;
+        }
+    </script>
+</head>
+<body>
+    <form class="feedback-form" name="feedbackForm" action="submit_feedback.php" method="POST" onsubmit="return validateForm()">
+        <h2>Feedback Form from the public about their candidate</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <div id="nameError" class="error"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <div id="emailError" class="error"></div>
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4"></textarea>
+        <div id="feedbackError" class="error"></div>
+
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating">
+            <option value="">Select Rating</option>
+            <option value="1">1 - Poor</option>
+            <option value="2">2 - Fair</option>
+            <option value="3">3 - Good</option>
+            <option value="4">4 - Very Good</option>
+            <option value="5">5 - Excellent</option>
+        </select>
+        <div id="ratingError" class="error"></div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
